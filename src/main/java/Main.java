@@ -3,6 +3,10 @@ import java.util.Scanner;
 import java.io.IOException;
 
 class WrongStudentName extends Exception { }
+class WrongAge extends Exception {
+    public WrongAge(String message){
+      super(message);
+    }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -21,9 +25,12 @@ class Main {
 
             } catch(WrongStudentName e) {
                 System.out.println("Błędne imie studenta!");
-            }
+            } catch (WrongAge e) {
+                System.out.println("Nieprawidłowy wiek. Wiek powinien być od 1 do 100.");     
+          }
         }
     }
+  }
 
     public static int menu() {
         System.out.println("Wciśnij:");
@@ -32,6 +39,19 @@ class Main {
         System.out.println("3 - aby wyszukać studenta po imieniu");
         System.out.println("0 - aby wyjść z programu");
         return scan.nextInt();
+    }
+
+    public static int readAge() throws WrongAge {
+        int age = 0;
+        while (true) {
+            System.out.println("Podaj wiek: ");
+            age = scan.nextInt();
+            if (age >= 1 && age <= 100) {
+                return age;
+            } else {
+                throw new WrongAge("Wiek spoza zakresu 1-100.");
+            }
+        }
     }
 
     public static String ReadName() throws WrongStudentName {
@@ -44,7 +64,7 @@ class Main {
         return name;
     }
 
-    public static void exercise1() throws IOException, WrongStudentName {
+    public static void exercise1() throws IOException, WrongStudentName, WrongAge {
         var name = ReadName();
         System.out.println("Podaj wiek: ");
         var age = scan.nextInt();
@@ -73,4 +93,4 @@ class Main {
             System.out.println(wanted.ToString());
         }
     }
-}
+  }
